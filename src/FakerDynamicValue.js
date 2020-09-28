@@ -76,15 +76,20 @@ export default class FakerDynamicValue {
 
   evaluate(context) {
     this.context = context;
-
-    const generator = new FakerGenerator(
-      this.locale,
-      this.category,
-      this.method,
-      this.options,
-    );
-
-    return generator.generate();
+    if (this.category) {
+      if (this.method) {
+          const generator = new FakerGenerator(
+            this.locale,
+            this.category,
+            this.method,
+            this.options,
+          );
+          return generator.generate();
+      } else {
+        return this.category + "'s methods: " + Object.keys(faker[this.category]).toString();
+      }
+    }
+    return '';
   }
 }
 
